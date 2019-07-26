@@ -7,22 +7,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import entities.Employee;
+
 public class Program {
 
 	public static void main(String[] args) {
-		String path = "/Users/brunofarias/Desktop/in.txt";
-		List<String> list = new ArrayList<>();
+		String path = "/Users/brunofarias/Desktop/in.csv";
+		List<Employee> list = new ArrayList<>();
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(path))){
-			String name = br.readLine();
+			String employeeCSV = br.readLine();
 			
-			while(name != null) {
-				list.add(name);
-				name = br.readLine();
+			while(employeeCSV != null) {
+				String[] fields = employeeCSV.split(",");
+				list.add(new Employee(fields[0], Double.parseDouble(fields[1])));
+				employeeCSV = br.readLine();
 			}
 			Collections.sort(list);
-			for(String s : list) {
-				System.out.println(s);
+			for(Employee s : list) {
+				System.out.println(s.getName() + ", " + s.getSalary());
 			}
 			
 		} catch(IOException e) {
